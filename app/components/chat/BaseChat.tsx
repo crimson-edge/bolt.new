@@ -21,6 +21,7 @@ import type { ProviderInfo } from '~/utils/types';
 import { ExportChatButton } from '~/components/chat/chatExportAndImport/ExportChatButton';
 import { ImportButtons } from '~/components/chat/chatExportAndImport/ImportButtons';
 import { ExamplePrompts } from '~/components/chat/ExamplePrompts';
+import GitCloneButton from './GitCloneButton';
 
 // @ts-ignore TODO: Introduce proper types
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -254,7 +255,6 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                       <span>Model Settings</span>
                     </button>
                   </div>
-
                   <div className={isModelSettingsCollapsed ? 'hidden' : ''}>
                     <ModelSelector
                       key={provider?.name + ':' + modelList.length}
@@ -361,7 +361,12 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                 </div>
               </div>
             </div>
-            {!chatStarted && ImportButtons(importChat)}
+            {!chatStarted && (
+              <div className="flex justify-center gap-2">
+                {ImportButtons(importChat)}
+                <GitCloneButton importChat={importChat} />
+              </div>
+            )}
             {!chatStarted && ExamplePrompts(sendMessage)}
           </div>
           <ClientOnly>{() => <Workbench chatStarted={chatStarted} isStreaming={isStreaming} />}</ClientOnly>
